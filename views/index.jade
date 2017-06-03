@@ -1,0 +1,45 @@
+extends layout
+
+block content
+	h1= title
+	p This is a sample of #{title} for starting numbers given by user input.
+	input#givenNo(type="text", placeholder="Enter a decimal number here.", onchange="solveCollatz(value)", oninput="solveCollatz(value)")
+	p#3k Number of 3k+1 operations:
+	p#k2 Number of 2k operations:
+	p#max Maximum member:
+	script. 
+		/* @function solveCollatz
+		 * @author Tom Tanaka
+		 * @date 6/1/2017
+		 * @brief Collatz Conjecture "Solver"
+		 * @param num a given natural decimal number
+		 */
+		function solveCollatz(num) {
+			let n = parseInt(num);
+			let max = 0;
+			let even = 0;
+			let odd = 0;
+			let array = new Array();
+			let ai = 0;
+
+			while (n > 1) {
+				if(n % 2 == 0) {
+					n = n / 2;
+					even++;
+				} else {
+					n = 3 * n + 1;
+					odd++;
+				}
+				array.push(n);
+			}
+			for (let i = 0; i < array.length; i++) {
+				if (array[i] > max)
+					max = array[i];
+			}
+
+			document.getElementById("3k").innerHTML = `Number of 3k+1 operations: ${odd}`;
+
+			document.getElementById("k2").innerHTML = `Number of 2k operations:  ${even}`;
+
+			document.getElementById("max").innerHTML = `Maximum member: ${max}`;
+		}
